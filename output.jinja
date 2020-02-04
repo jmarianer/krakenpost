@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sea Monkey Mail teammates</title>
+    <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js'></script>
+    <script>
+      function foo() {
+        $('div').hide()
+        selected = $('#select')[0].value
+        $('#'+selected).show()
+      }
+    </script>
+    <style>
+      #select { font-size: 1em; }
+      th { text-align: left; }
+      .checkbox { font-size: 1.5em; }
+    </style>
+  </head>
+  <body>
+    <h1>Teammates for
+      <select id="select" onchange="foo()">
+        <option value="">Select a monkey 🐵</option>
+        {% for name in teammates | sort %}
+        <option value="{{ name | toid }}">{{name}}</option>
+        {% endfor %}
+      </select>
+    </h1>
+    {% for name, mates in teammates.items() %}
+      <div id="{{ name | toid }}" style="display: none">
+        <table>
+          <tr>
+            <th></th>
+            <th>Cabin</th>
+            <th>Preferred name</th>
+            <th>Full name</th>
+            <th>Special considerations</th>
+          </tr>
+          {% for name, preferred, cabin, considerations in mates %}
+            <tr>
+              <td class="checkbox">☐</td>
+              <td>{{cabin}}</td>
+              <td>{{preferred}}</td>
+              <td>{{name}}</td>
+              <td>{{considerations}}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% endfor %}
+  </body>
+</html>
+
