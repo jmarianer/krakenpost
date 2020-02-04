@@ -8,13 +8,37 @@
       function foo() {
         $('div').hide()
         selected = $('#select')[0].value
-        $('#'+selected).show()
+        $('#'+selected).css('display', 'flex');
       }
     </script>
     <style>
       #select { font-size: 1em; }
       th { text-align: left; }
       .checkbox { font-size: 1.5em; }
+      table { border-collapse: collapse; }
+      body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .table-div { width: 50%; }
+      tr:nth-child(4n), tr:nth-child(4n+1) { background-color: aliceblue; }
+      tr:nth-child(4n+2), tr:nth-child(4n+3) { background-color: #deefff; }
+
+      .table-div {
+        display: none;
+      }
+
+      td.details {
+        font-size: smaller;
+        padding-left: 5em;
+        padding-bottom: 2ex;
+        padding-top: 0;
+      }
+
     </style>
   </head>
   <body>
@@ -27,22 +51,24 @@
       </select>
     </h1>
     {% for name, mates in teammates.items() %}
-      <div id="{{ name | toid }}" style="display: none">
+      <div id="{{ name | toid }}" class="table-div">
         <table>
           <tr>
             <th></th>
             <th>Cabin</th>
             <th>Preferred name</th>
-            <th>Full name</th>
-            <th>Special considerations</th>
           </tr>
           {% for name, preferred, cabin, considerations in mates %}
             <tr>
               <td class="checkbox">☐</td>
               <td>{{cabin}}</td>
               <td>{{preferred}}</td>
-              <td>{{name}}</td>
-              <td>{{considerations}}</td>
+            </tr>
+            <tr>
+              <td colspan=3 class="details">
+                <b>Full name:</b> {{name}}<br>
+                <b>Special considerations:</b> {{considerations}}
+              </td>
             </tr>
           {% endfor %}
         </table>
