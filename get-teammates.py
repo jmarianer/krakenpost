@@ -58,6 +58,11 @@ def main():
         name_to_teams[name].append(team)
         team_to_names[team].append((name, preferred, cabin, considerations))
 
+    # Stupid temporary(?) workaround
+    for team, name, preferred, cabin in (a for a in values if len(a) == 4):
+        name_to_teams[name].append(team)
+        team_to_names[team].append((name, preferred, cabin, "N/A"))
+
     teammates = {}
     for name in name_to_teams.keys():
         teammates[name] = sorted((person for team in name_to_teams[name] for person in team_to_names[team] if person[0] != name), key=key)
