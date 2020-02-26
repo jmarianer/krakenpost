@@ -3,12 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <title>Sea Monkey Mail teammates</title>
-    <script src='https://code.jquery.com/jquery-3.4.1.slim.min.js'></script>
     <script>
-      function foo() {
-        $('div').hide()
-        selected = $('#select')[0].value
-        $('#'+selected).css('display', 'flex');
+      function changeSelection() {
+        alldivs = document.getElementsByTagName('div')
+        for (var i = 0; i < alldivs.length; i++) {
+          alldivs[i].style.display = 'none'
+        }
+        selected = document.getElementById('select').value
+        document.getElementById(selected).style.display='flex'
       }
     </script>
     <style>
@@ -43,9 +45,9 @@
   </head>
   <body>
     <h1>Teammates for
-      <select id="select" onchange="foo()">
+      <select id="select" onchange="changeSelection()">
         <option value="">Select a monkey 🐵</option>
-        {% for name in teammates | sort %}
+        {% for name in teammates | sort -%}
         <option value="{{ name | toid }}">{{name}}</option>
         {% endfor %}
       </select>
@@ -58,19 +60,19 @@
             <th>Cabin</th>
             <th>Preferred name</th>
           </tr>
-          {% for name, preferred, cabin, considerations in mates %}
-            <tr>
-              <td class="checkbox">☐</td>
-              <td>{{cabin}}</td>
-              <td>{{preferred}}</td>
-            </tr>
-            <tr>
-              <td colspan=3 class="details">
-                <b>Full name:</b> {{name}}<br>
-                <b>Special considerations:</b> {{considerations}}
-              </td>
-            </tr>
-          {% endfor %}
+          {% for name, preferred, cabin, considerations in mates -%}
+          <tr>
+            <td class="checkbox">☐</td>
+            <td>{{cabin}}</td>
+            <td>{{preferred}}</td>
+          </tr>
+          <tr>
+            <td colspan=3 class="details">
+              <b>Full name:</b> {{name}}<br>
+              <b>Special considerations:</b> {{considerations}}
+            </td>
+          </tr>
+          {% endfor -%}
         </table>
       </div>
     {% endfor %}
