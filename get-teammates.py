@@ -34,7 +34,10 @@ def login():
 
 
 def key(t):
-    cabin = int(t[2])
+    try:
+        cabin = int(t[2])
+    except:
+        return (0, 0)
     deck = int(cabin / 1000)
     if cabin % 2 == 0:
         return (deck, cabin)
@@ -49,7 +52,7 @@ def main():
     sheet = service.spreadsheets()
     result = sheet.values().get(
             spreadsheetId='1mkmNYD7_YRz2qtpRio-c15HLdrNW61uTWT2Ayq1bnXg',
-            range='2020 SMM Team Allocation!A7:E581').execute()
+            range='2020 SMM Team Allocation!A7:E599').execute()
     values = result.get('values', [])
     
     name_to_teams = defaultdict(list)
