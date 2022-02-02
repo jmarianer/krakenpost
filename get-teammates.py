@@ -51,8 +51,8 @@ def main():
 
     sheet = service.spreadsheets()
     result = sheet.values().get(
-            spreadsheetId='1mkmNYD7_YRz2qtpRio-c15HLdrNW61uTWT2Ayq1bnXg',
-            range='2020 SMM Team Allocation!A7:E599').execute()
+            spreadsheetId='1BZcLIyC63d_ad-0bs2U6mnHbo5mwi8cnFTxlZPOvPX0',
+            range='2022 Kraken Post TEAM ALLOCATION!A8:E599').execute()
     values = result.get('values', [])
     
     name_to_teams = defaultdict(list)
