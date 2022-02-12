@@ -1,16 +1,11 @@
 import os.path
 import pickle
 import pprint
-from jinja2 import Environment
 from collections import defaultdict
 
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-
-def toid(s):
-    valid_chars = ''.join(c for c in s if c.isalnum() or c.isspace())
-    return '-'.join(valid_chars.split())
 
 def login():
     creds = None
@@ -45,7 +40,7 @@ def key(t):
         return (deck, -cabin)
 
 
-def main():
+def get_teammates():
     creds = login()
     service = build('sheets', 'v4', credentials=creds)
 
@@ -70,13 +65,10 @@ def main():
     for name in name_to_teams.keys():
         teammates[name] = sorted((person for team in name_to_teams[name] for person in team_to_names[team] if person[0] != name), key=key)
 
-    env = Environment()
-    env.filters['toid'] = toid
-    with open('output.jinja') as f:
-        tmpl = env.from_string(f.read())
-    print(tmpl.render(teammates=teammates))
+    return teammates
 
 
 if __name__ == '__main__':
-    main()
+    with open('teammates.pickle', 'wb') as f:
+        pickle.dump(get_teammates(), f)
 

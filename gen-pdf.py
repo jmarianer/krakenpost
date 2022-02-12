@@ -1,26 +1,32 @@
+import pickle
 from fpdf import FPDF
 
 class myPdf:
-    i = 1
-    j = 4
+    i = 3
+    j = 1
     ox = 0
     oy = 0
-    pdf = FPDF('P', 'pt', 'Letter')
+    pdf = FPDF('L', 'pt', 'Letter')
 
     def __init__(self):
         self.pdf.set_font('Arial')
 
     def next_card(self):
         self.i += 1
-        if self.i == 2:
+        if self.i == 4:
             self.i = 0
             self.j += 1
-            if self.j == 5:
+            if self.j == 2:
                 self.pdf.add_page()
+                self.pdf.line(0, 306, 792, 306)
+                self.pdf.line(198, 0, 198, 612)
+                self.pdf.line(396, 0, 396, 612)
+                self.pdf.line(594, 0, 594, 612)
+                self.pdf.line(792, 0, 792, 612)
                 self.j = 0
 
-        self.ox = 54 + 252 * self.i
-        self.oy = 36 + 144 * self.j
+        self.ox = 198 * self.i
+        self.oy = 306 * self.j
 
     def rect(self, x, y, w, h):
         self.pdf.rect(self.ox + x, self.oy + y, w, h)
@@ -41,28 +47,23 @@ class myPdf:
         self.pdf.text(-(self.oy + 72 + width/2), self.ox + x, text)
         self.pdf.rotate(0)
 
-    def horiztext(self, x, y, text):
-        self.pdf.set_font('Arial', 'B', 10)
+    def horiztext(self, x, y, text, style='', size=10):
+        self.pdf.set_font('Arial', style, size)
         self.pdf.text(self.ox + x, self.oy + y, text)
 
 pdf = myPdf()
 
-for i in range(10):
-    pdf.next_card()
-    pdf.bgimage('background.png')
-    pdf.verttext(53, 'Team 35', 20)
-    pdf.verttext(73, 'Lew Zealand', 16)
-    for i, text in enumerate([
-        'Megs Drinkwater (1234)',
-        'Joey Marianer (5503)',
-        'Angela Brett (5501)',
-        'Marni Hager (10646)',
-        'Laura Parcel (11714)',
-        'Randy Parcel (11714)',
-        'C. Monkey (11717)',
-        'L. Monkey (11717)',
-        ]):
-        pdf.rect(106, 15 + i * 15, 4, 4)
-        pdf.horiztext(113, 20 + i * 15, text)
+with open('teammates.pickle', 'rb') as f:
+    teammates = pickle.load(f)
+
+    #pdf.bgimage('background.png')
+    #pdf.verttext(53, 'Team 35', 20)
+for name, mates in teammates.items():
+    for i, (_, preferred, cabin, considerations) in enumerate(mates):
+        if i % 21 == 0:
+            pdf.next_card()
+            pdf.horiztext(10, 25, f'Teammates for { name.split()[0] }', 'B', 12)
+        pdf.rect(23, 40 + (i % 21) * 12, 4, 4)
+        pdf.horiztext(30, 45 +(i % 21) * 12, f'{ preferred.split()[0] } ({ cabin })'.encode('ascii', 'ignore').decode('ascii'))
 pdf.pdf.output('foo.pdf', 'F')
 
