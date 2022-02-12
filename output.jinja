@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>Kraken Post teammates</title>
     <script>
       function changeSelection() {
@@ -32,6 +34,7 @@
 
       .table-div {
         display: none;
+        flex-direction : column;
       }
 
       td.details {
@@ -40,10 +43,20 @@
         padding-bottom: 2ex;
         padding-top: 0;
       }
+      @media screen 
+        and (max-device-width: 500px) 
+        and (-webkit-min-device-pixel-ratio: 1) { 
+        .table-div, #select {
+          width: 100%;
+        }
+      }
 
     </style>
   </head>
   <body>
+    Note: this information is accurate as of mid-February, 2022. The most
+    up-to-date information will be on the door of stateroom 5149 during
+    sailing.
     <h1>Teammates for
       <select id="select" onchange="changeSelection()">
         <option value="">Select a JoCoNaut 🎸</option>

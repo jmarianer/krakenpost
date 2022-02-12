@@ -47,17 +47,17 @@ def get_teammates():
     sheet = service.spreadsheets()
     result = sheet.values().get(
             spreadsheetId='1BZcLIyC63d_ad-0bs2U6mnHbo5mwi8cnFTxlZPOvPX0',
-            range='2022 Kraken Post TEAM ALLOCATION!A8:E599').execute()
+            range='2022 Kraken Post TEAM ALLOCATION!A8:F599').execute()
     values = result.get('values', [])
     
     name_to_teams = defaultdict(list)
     team_to_names = defaultdict(list)
-    for team, name, preferred, cabin, considerations in (a for a in values if len(a) == 5):
+    for team, name, preferred, cabin, _, considerations in (a for a in values if len(a) == 6):
         name_to_teams[name].append(team)
         team_to_names[team].append((name, preferred, cabin, considerations))
 
     # Stupid temporary(?) workaround
-    for team, name, preferred, cabin in (a for a in values if len(a) == 4):
+    for team, name, preferred, cabin, _ in (a for a in values if len(a) == 5):
         name_to_teams[name].append(team)
         team_to_names[team].append((name, preferred, cabin, "N/A"))
 
