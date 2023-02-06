@@ -1,3 +1,4 @@
+import datetime
 from jinja2 import Environment
 import pickle
 
@@ -13,5 +14,6 @@ with open('teammates.pickle', 'rb') as f:
     teammates = pickle.load(f)
 with open('output.jinja') as f:
     tmpl = env.from_string(f.read())
+tmpl.globals['today'] = datetime.date.today().strftime("%b %-d, %Y")
 print(tmpl.render(teammates=teammates))
 
