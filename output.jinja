@@ -18,8 +18,8 @@
     <style>
       #select { font-size: 1em; }
       th { text-align: left; }
-      .checkbox { font-size: 1.5em; }
       table { border-collapse: collapse; }
+      .checkbox { font-size: 1.5em; width: 1.5em; }
       body {
         font-family: sans-serif;
         display: flex;
@@ -54,7 +54,7 @@
     </style>
   </head>
   <body>
-    Note: this information is accurate as of January, 2023. The most
+    Note: this information is accurate as of February, 2024. The most
     up-to-date information will be on the door of stateroom 5149 during
     sailing.
     <h1>Teammates for
@@ -68,19 +68,27 @@
     {% for name, mates in teammates.items() %}
       <div id="{{ name | toid }}" class="table-div">
         <table>
+          <colgroup>
+            <col class="checkbox">
+            <col class="cabin">
+            <col class="preferred_name">
+            <col class="teamname">
+          </colgroup>
           <tr>
             <th></th>
             <th>Cabin</th>
             <th>Preferred name</th>
+            <th>Team name</th>
           </tr>
-          {% for name, preferred, cabin, considerations in mates -%}
+          {% for team, name, preferred, cabin, boat_section, considerations in mates -%}
           <tr>
             <td class="checkbox">☐</td>
-            <td>{{cabin}}</td>
+            <td>{{cabin}} ({{boat_section}})</td>
             <td>{{preferred}}</td>
+            <td>{{team}}</td>
           </tr>
           <tr>
-            <td colspan=3 class="details">
+            <td colspan=4 class="details">
               <b>Full name:</b> {{name}}<br>
               <b>Special considerations:</b> {{considerations}}
             </td>

@@ -30,7 +30,7 @@ def login():
 
 def key(t):
     try:
-        cabin = int(t[2])
+        cabin = int(t[3])
     except:
         return (0, 0)
     deck = int(cabin / 1000)
@@ -46,24 +46,25 @@ def get_teammates():
 
     sheet = service.spreadsheets()
     result = sheet.values().get(
-            spreadsheetId='1OLDZ1Bek3_fbWaPXzmza2pJabw2iF2aMrqDk9thTeMM',
-            range='2023 Kraken Post TEAM ALLOCATION!A8:F528').execute()
+            spreadsheetId='15GO3ULXRCch83uhF9LPGB-2irMHhj9wIXL4hBUaqVNQ',
+            range='2024 Kraken Post TEAM ALLOCATION!A8:F357').execute()
     values = result.get('values', [])
     
     name_to_teams = defaultdict(list)
     team_to_names = defaultdict(list)
-    for team, name, preferred, cabin, _, considerations in (a for a in values if len(a) == 6):
+    for team_and_no, name, preferred, cabin, boat_section, considerations in (a for a in values if len(a) == 6):
+        _, _, team = team_and_no.partition('. ')
         name_to_teams[name].append(team)
-        team_to_names[team].append((name, preferred, cabin, considerations))
+        team_to_names[team].append((team, name, preferred, cabin, boat_section, considerations))
 
-    # Stupid temporary(?) workaround
-    for team, name, preferred, cabin, _ in (a for a in values if len(a) == 5):
+    for team_and_no, name, preferred, cabin, boat_section in (a for a in values if len(a) == 5):
+        _, _, team = team_and_no.partition('. ')
         name_to_teams[name].append(team)
-        team_to_names[team].append((name, preferred, cabin, "N/A"))
+        team_to_names[team].append((team, name, preferred, cabin, boat_section, 'N/A'))
 
     teammates = {}
     for name in name_to_teams.keys():
-        teammates[name] = sorted((person for team in name_to_teams[name] for person in team_to_names[team] if person[0] != name), key=key)
+        teammates[name] = sorted((person for team in name_to_teams[name] for person in team_to_names[team] if person[1] != name), key=key)
 
     return teammates
 
