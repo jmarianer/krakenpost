@@ -46,8 +46,8 @@ def get_teammates():
 
     sheet = service.spreadsheets()
     result = sheet.values().get(
-            spreadsheetId='15GO3ULXRCch83uhF9LPGB-2irMHhj9wIXL4hBUaqVNQ',
-            range='2024 Kraken Post TEAM ALLOCATION!A8:F357').execute()
+            spreadsheetId='1MAF4XqgC7ulZskKXQcmt6o6_yRLxEnoYOgJ_bSwoCNE',
+            range='2024 Kraken Post TEAM ALLOCATION!A8:F402').execute()
     values = result.get('values', [])
     
     name_to_teams = defaultdict(list)

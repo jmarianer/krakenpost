@@ -29,8 +29,10 @@
       }
 
       .table-div { width: 50%; }
-      tr:nth-child(4n), tr:nth-child(4n+1) { background-color: aliceblue; }
-      tr:nth-child(4n+2), tr:nth-child(4n+3) { background-color: #deefff; }
+      @media screen {
+        tr:nth-child(4n), tr:nth-child(4n+1) { background-color: aliceblue; }
+        tr:nth-child(4n+2), tr:nth-child(4n+3) { background-color: #deefff; }
+      }
 
       .table-div {
         display: none;
@@ -50,12 +52,29 @@
           width: 100%;
         }
       }
-
+      @media print {
+        h1 {
+          display: none;
+        }
+        .table-div {
+          width: 100%;
+        }
+        tr:nth-child(2n) {
+          border-top: 2px solid black;
+        }
+        td:last-child {
+          width: 100%;
+        }
+        th, td:nth-child(2) {
+          white-space: nowrap;
+          padding-right: 23px;
+        }
+      }
     </style>
   </head>
   <body>
-    Note: this information is accurate as of February, 2024. The most
-    up-to-date information will be on the door of stateroom 5149 during
+    Note: this information is accurate as of February, 2025. The most
+    up-to-date information will be on the door of stateroom 1014 during
     sailing.
     <h1>Teammates for
       <select id="select" onchange="changeSelection()">
