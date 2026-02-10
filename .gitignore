@@ -1,0 +1,5 @@
+.*.swp
+project
+*.pickle
+credentials.json
+venv
