@@ -71,17 +71,17 @@
           <tr>
             <th></th>
             <th>Cabin</th>
-            <th>Preferred name</th>
+            <th>Name</th>
           </tr>
           {% for name, preferred, cabin, considerations in mates -%}
           <tr>
             <td class="checkbox">☐</td>
             <td>{{cabin}}</td>
-            <td>{{preferred}}</td>
+            <td>{{name}}</td>
           </tr>
           <tr>
             <td colspan=3 class="details">
-              <b>Full name:</b> {{name}}<br>
+              <b>Preferred name:</b> {{preferred}}<br>
               <b>Special considerations:</b> {{considerations}}
             </td>
           </tr>
