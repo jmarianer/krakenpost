@@ -1,5 +1,5 @@
 .*.swp
 project
-token.pickle
+*.pickle
 credentials.json
 venv
